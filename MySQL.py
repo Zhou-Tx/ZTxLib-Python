@@ -39,11 +39,11 @@ class MySQL:
             passwd=self.__passwd
         )
 
-    def Fetchone(self, sql) -> 'Fetch the first record from the database with the sql sentence':
+    def Fetchone(self, sql, *args, **kwargs) -> 'Fetch the first record from the database with the sql sentence':
         db = self.__dbConnect()
         cursor = db.cursor()
         try:
-            cursor.execute(sql)
+            cursor.execute(sql, args, kwargs)
             return cursor.fetchone()
         except:
             db.rollback()
@@ -51,11 +51,11 @@ class MySQL:
         finally:
             db.close()
 
-    def Fetchall(self, sql) -> 'Fetch all records from the database with the sql sentence':
+    def Fetchall(self, sql, *args, **kwargs) -> 'Fetch all records from the database with the sql sentence':
         db = self.__dbConnect()
         cursor = db.cursor()
         try:
-            cursor.execute(sql)
+            cursor.execute(sql, args, kwargs)
             return cursor.fetchall()
         except:
             db.rollback()
@@ -63,11 +63,11 @@ class MySQL:
         finally:
             db.close()
 
-    def Execute(self, sql) -> 'Execute a sql sentence to the database':
+    def Execute(self, sql, *args, **kwargs) -> 'Execute a sql sentence to the database':
         db = self.__dbConnect()
         cursor = db.cursor()
         try:
-            cursor.execute(sql)
+            cursor.execute(sql, args, kwargs)
             db.commit()
             return True
         except Exception as e:
@@ -76,12 +76,12 @@ class MySQL:
         finally:
             db.close()
 
-    def ExecuteAll(self, sqlList) -> 'Execute a transaction to the database with a list of sql sentences':
+    def ExecuteAll(self, *sql:'SqlParameter') -> 'Execute a transaction to the database with a list of sql sentences':
         db = self.__dbConnect()
         cursor = db.cursor()
         try:
-            for sql in sqlList:
-                cursor.execute(sql)
+            for sqlParameter in sql:
+                cursor.execute(sqlParameter[0], sqlParameter[1], sqlParameter[2])
             db.commit()
             return True
         except Exception as e:
@@ -89,3 +89,6 @@ class MySQL:
             return False
         finally:
             db.close()
+    
+    def Parameter(sql, *args, **kwargs):
+        return (sql, args, kwargs)
