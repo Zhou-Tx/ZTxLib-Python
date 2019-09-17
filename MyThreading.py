@@ -20,7 +20,7 @@ class MyThread:
     def __init__(self, method) -> 'Initialize threads with a method':
         self.__method = method
 
-    def start(self, args=None, threadCount=5) -> 'Start to run the thread method':
+    def start(self, args=None, threadCount=1) -> 'Start to run the thread method':
         self.__threadings = []
         for t in range(threadCount):
             threading = _Thread_(self.__method, args)
