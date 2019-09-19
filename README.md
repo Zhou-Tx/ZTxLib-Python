@@ -36,8 +36,7 @@ MySQL(
 该类用于对MySQL数据库进行操作，包括：
 Fetchone(sql,args)          # 根据sql语句从数据库中查询一条记录
 Fetchall(sql,args)          # 根据sql语句从数据库中查询全部记录
-ExecuteNonQuery(sql,args)   # 向数据库提交一条sql语句
-ExecuteTrans(sqlList)       # 建立一个事务，提交sql语句列表
+ExecuteNonQuery(sql,args)   # 向数据库提交一个事务，可包含多条sql语句，分号隔开
 
 3.MyThread.py  # MyThread类
 from MyThread import MyThread
