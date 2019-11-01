@@ -2,73 +2,74 @@
 # -*- coding: UTF-8 -*-
 from bs4 import BeautifulSoup
 from w3lib.html import remove_tags
-from socket import gethostbyname
 from urllib.parse import urlparse
 import requests
+import socket
 
 
 class MyHTML:
-    def __init__(self, url:str):
+    def __init__(self, url: str):
         self.__url = url
-        self.__host = self._Host()
-        self.__ip = self._IP()
-        self.__response = self._Response()
-        self.__beautifulSoup = self._BeautifulSoup()
+        self.__host = self._host()
+        self.__ip = self._ip()
+        self.__response = self._response()
+        self.__beautifulSoup = self._beautiful_soup()
         self.__html = str(self.__beautifulSoup)
-        self.__text = self._Text()
+        self.__text = self._text()
         
     def __str__(self):
         return "<MyHTML object with url='%s'>" % self.__url
 
-    def _Host(self):
+    def _host(self):
+        return urlparse(self.__url).hostname
+
+    def _ip(self):
         try:
-            return urlparse(self.__url).hostname
+            return socket.gethostbyname(self.__host)
         except:
             return None
 
-    def _IP(self):
-        try:
-            return gethostbyname(self.__host)
-        except:
-            return None
-
-    def _Response(self):
+    def _response(self):
         header = {
-                'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'
+                'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'
                 }
         try:
             return requests.get(self.__url, headers=header, timeout=30)
         except:
             return None
     
-    def _BeautifulSoup(self):
+    def _beautiful_soup(self):
         response = self.__response
+        if response is None:
+            return None
         charset = requests.utils.get_encodings_from_content(response.text)
         if charset:
             charset = charset[0]
         else:
             charset = response.apparent_encoding
-        if charset[0:2]=='gb':
-            response.encoding='gb18030'
+        if charset[0:2] == 'gb':
+            response.encoding = 'gb18030'
         else:
             response.encoding = charset
         try:
-            return BeautifulSoup(response.text,'html.parser')
-        except:
+            return BeautifulSoup(response.text, 'html.parser')
+        except Exception as e:
+            print(type(e), e)
             return None
 
-    def _Text(self):
-        if self.__html=='None':
+    def _text(self):
+        if self.__html == 'None':
             self.__html = None
-        bsobj = self.__beautifulSoup
+        bs = self.__beautifulSoup
         html = self.__html
         try:
-            for tags in ['script','style']:
-                for tag in bsobj.find_all(tags):
+            for tags in ['script', 'style']:
+                for tag in bs.find_all(tags):
                     html = html.replace(str(tag), '')
             html = ' '.join(remove_tags(html).split())
             return html
-        except:
+        except Exception as e:
+            print(type(e), e)
             return None
     
     @property

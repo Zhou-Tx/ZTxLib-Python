@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 from threading import Thread
 
+
 # Private, do not touch!
 class _Thread_(Thread):
     def __init__(self, method, args=None):
@@ -10,19 +11,19 @@ class _Thread_(Thread):
         self.__args = args
 
     def run(self):
-        if self.__args==None:
+        if self.__args is None:
             self.__method()
         else:
             self.__method(self.__args)
-    
+
 
 class MyThread:
     def __init__(self, method) -> 'Initialize threads with a method':
         self.__method = method
-
-    def start(self, args=None, threadCount=1) -> 'Start to run the thread method':
         self.__threadings = []
-        for t in range(threadCount):
+
+    def start(self, args=None, thread_count=1) -> 'Start to run the thread method':
+        for t in range(thread_count):
             threading = _Thread_(self.__method, args)
             threading.start()
             self.__threadings.append(threading)
