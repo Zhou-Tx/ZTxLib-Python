@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
+# @Time     :  2019/9/21
+# @Author   :  Zhou Tianxing
+# @Software :  PyCharm Professional x64
+# @FileName :  MyHTML
+""""""
 from bs4 import BeautifulSoup
 from w3lib.html import remove_tags
 from urllib.parse import urlparse

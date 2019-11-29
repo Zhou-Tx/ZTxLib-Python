@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
+# @Time     :  2019/9/19
+# @Author   :  Zhou Tianxing
+# @Software :  PyCharm Professional x64
+# @FileName :  MySQL
+""""""
 from pymysql import connect, DatabaseError
 
 

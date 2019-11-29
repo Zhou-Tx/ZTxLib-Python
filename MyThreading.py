@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
+# @Time     :  2019/10/7
+# @Author   :  Zhou Tianxing
+# @Software :  PyCharm Professional x64
+# @FileName :  MyThreading
+""""""
 from threading import Thread
 
 
