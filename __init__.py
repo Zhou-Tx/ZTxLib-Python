@@ -5,6 +5,6 @@
 # @Software :  PyCharm Professional x64
 # @FileName :  __init__
 """"""
-import MyHTML
-import MySQL
-import MyThreading
+from .MyHTML import MyHTML
+from .MySQL import MySQL
+from .MyThreading import MyThread
