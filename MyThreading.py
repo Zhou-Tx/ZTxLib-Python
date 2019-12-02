@@ -9,30 +9,31 @@ from threading import Thread
 
 
 # Private, do not touch!
-class _Thread_(Thread):
-    def __init__(self, method, args=None):
+class _Thread(Thread):
+    def __init__(self, function, **kwargs):
         super().__init__()
-        self.__method = method
-        self.__args = args
+        self.__function = function
+        self.__kwargs = kwargs
 
     def run(self):
-        if self.__args is None:
-            self.__method()
-        else:
-            self.__method(self.__args)
+        self.__function(**self.__kwargs)
 
 
 class MyThread:
     def __init__(self, method) -> 'Initialize threads with a method':
         self.__method = method
-        self.__threadings = []
+        self.__threads = []
 
-    def start(self, args=None, thread_count=1) -> 'Start to run the thread method':
+    def start(self, **kwargs) -> 'Start to run the thread method':
+        if 'thread_count' in kwargs.keys():
+            thread_count = kwargs['thread_count']
+        else:
+            thread_count = 1
         for t in range(thread_count):
-            threading = _Thread_(self.__method, args)
+            threading = _Thread(self.__method, **kwargs)
             threading.start()
-            self.__threadings.append(threading)
+            self.__threads.append(threading)
 
     def wait(self) -> 'Waiting for the running thread method to finish':
-        for t in self.__threadings:
+        for t in self.__threads:
             t.join()
