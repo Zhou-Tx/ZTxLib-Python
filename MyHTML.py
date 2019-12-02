@@ -19,7 +19,7 @@ class MyHTML:
         self.__ip = self._ip()
         self.__response = self._response()
         self.__beautifulSoup = self._beautiful_soup()
-        self.__html = str(self.__beautifulSoup)
+        self.__html = self.__beautifulSoup.prettify()
         self.__text = self._text()
         
     def __str__(self):
