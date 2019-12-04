@@ -24,11 +24,7 @@ class MyThread:
         self.__method = method
         self.__threads = []
 
-    def start(self, **kwargs) -> 'Start to run the thread method':
-        if 'thread_count' in kwargs.keys():
-            thread_count = kwargs['thread_count']
-        else:
-            thread_count = 1
+    def start(self, thread_count=1, **kwargs) -> 'Start to run the thread method':
         for t in range(thread_count):
             threading = _Thread(self.__method, **kwargs)
             threading.start()
