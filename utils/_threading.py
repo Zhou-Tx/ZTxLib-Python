@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# @Time     :  2019/10/7
+# @Time     :  2020/01/10
 # @Author   :  Zhou Tianxing
 # @Software :  PyCharm Professional x64
-# @FileName :  MyThreading
+# @FileName :  _threading
 """"""
 from threading import Thread
 
 
-# Private, do not touch!
+# Private
 class _Thread(Thread):
     def __init__(self, function, **kwargs):
         super().__init__()
@@ -19,17 +19,27 @@ class _Thread(Thread):
         self.__function(**self.__kwargs)
 
 
-class MyThread:
+class Threading:
     def __init__(self, method) -> 'Initialize threads with a method':
         self.__method = method
         self.__threads = []
 
-    def start(self, thread_count=1, **kwargs) -> 'Start to run the thread method':
+    def start(self, thread_count: int = 1, **kwargs) -> None:
+        """
+        Start to run the thread method
+        :param thread_count: the count of threads
+        :param kwargs:
+        :return:
+        """
         for t in range(thread_count):
             threading = _Thread(self.__method, **kwargs)
             threading.start()
             self.__threads.append(threading)
 
-    def wait(self) -> 'Waiting for the running thread method to finish':
+    def wait(self) -> None:
+        """
+        Waiting for the running thread method to finish
+        :return:
+        """
         for t in self.__threads:
             t.join()
