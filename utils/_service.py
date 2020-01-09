@@ -66,7 +66,7 @@ class Service(win32serviceutil.ServiceFramework):
         pass
 
 
-def main(argv, service_class):
+def service(argv, service_class):
     if len(argv) == 1:
         servicemanager.Initialize()
         servicemanager.PrepareToHostSingle(service_class)

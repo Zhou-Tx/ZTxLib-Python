@@ -5,5 +5,5 @@
 # @Software :  PyCharm Professional x64
 # @FileName :  __init__.py
 """"""
-from ._service import Service, main
+from ._service import Service, service
 from ._threading import Threading
