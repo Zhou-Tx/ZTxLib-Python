@@ -8,18 +8,16 @@
 from threading import Thread
 
 
-# Private
-class _Thread(Thread):
-    def __init__(self, function, **kwargs):
-        super().__init__()
-        self.__function = function
-        self.__kwargs = kwargs
-
-    def run(self):
-        self.__function(**self.__kwargs)
-
-
 class Threading:
+    class __Thread(Thread):
+        def __init__(self, function, **kwargs):
+            super().__init__()
+            self.__function = function
+            self.__kwargs = kwargs
+
+        def run(self):
+            self.__function(**self.__kwargs)
+
     def __init__(self, method) -> 'Initialize threads with a method':
         self.__method = method
         self.__threads = []
@@ -32,7 +30,7 @@ class Threading:
         :return:
         """
         for t in range(thread_count):
-            threading = _Thread(self.__method, **kwargs)
+            threading = self.__Thread(self.__method, **kwargs)
             threading.start()
             self.__threads.append(threading)
 
