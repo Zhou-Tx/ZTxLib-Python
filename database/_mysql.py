@@ -11,13 +11,13 @@ from pymysql import connect, DatabaseError
 class MySQL:
     def __init__(self,
                  host='localhost',  # 要连接的主机地址
-                 port=3306,         # 端口
-                 user=None,         # 用于登录的数据库用户
-                 password=None,     # 密码
-                 database=None,     # 要连接的数据库
-                 passwd=None,       # 同 password，为了兼容 MySQLdb
-                 db=None,           # 同 database，为了兼容 MySQLdb
-                 charset='utf8',    # 字符编码
+                 port=3306,  # 端口
+                 user=None,  # 用于登录的数据库用户
+                 password=None,  # 密码
+                 database=None,  # 要连接的数据库
+                 passwd=None,  # 同 password，为了兼容 MySQLdb
+                 db=None,  # 同 database，为了兼容 MySQLdb
+                 charset='utf8',  # 字符编码
                  connect_timeout=5  # 连接超时时间，(1-31536000)
                  ):
         self.__host = host
@@ -111,8 +111,8 @@ class MySQL:
         cursor = db.cursor()
         try:
             cnt = 0
-            for sql, args_ in args:
-                cnt += cursor.execute(sql, args_)
+            for sql in args:
+                cnt += cursor.execute(*sql)
             db.commit()
             return cnt
         except DatabaseError:
