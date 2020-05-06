@@ -17,7 +17,7 @@ class MySQL:
                  database=None,  # 要连接的数据库
                  passwd=None,  # 同 password，为了兼容 MySQLdb
                  db=None,  # 同 database，为了兼容 MySQLdb
-                 charset='utf8',  # 字符编码
+                 charset='utf8mb4',  # 字符编码
                  connect_timeout=5  # 连接超时时间，(1-31536000)
                  ):
         self.__host = host

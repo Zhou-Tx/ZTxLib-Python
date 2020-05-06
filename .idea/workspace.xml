@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8c23fdd9-51e7-4169-b3ce-7f9b3dc713f6" name="Default Changelist" comment="Update _service.py">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/utils/_html.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/_mysql.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/_mysql.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/_sqlite.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/_sqlite.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +127,7 @@
       <workItem from="1578627244103" duration="288000" />
       <workItem from="1578628378525" duration="1006000" />
       <workItem from="1578637031228" duration="1614000" />
-      <workItem from="1578643529021" duration="542000" />
+      <workItem from="1578643529021" duration="841000" />
     </task>
     <task id="LOCAL-00001" summary="Arranged `database` and _threading.py">
       <created>1578601035427</created>
@@ -160,7 +157,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578628761565</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Update _mysql.py and _sqlite.py">
+      <created>1578644192372</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1578644192372</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -185,17 +189,18 @@
     <MESSAGE value="Create win32 service lib" />
     <MESSAGE value="Update _service.py" />
     <MESSAGE value="Update _threading.py&#10;make __Thread private" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update _threading.py&#10;make __Thread private" />
+    <MESSAGE value="Update _mysql.py and _sqlite.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update _mysql.py and _sqlite.py" />
   </component>
   <component name="WindowStateProjectService">
     <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1578641931541">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1578641931541" />
-    <state x="165" y="0" width="1201" height="728" key="CommitChangelistDialog2" timestamp="1578644125374">
+    <state x="165" y="0" width="1201" height="728" key="CommitChangelistDialog2" timestamp="1578644190575">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="165" y="0" width="1201" height="728" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1578644125374" />
+    <state x="165" y="0" width="1201" height="728" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1578644190575" />
     <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1577344672922">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -204,10 +209,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1578598007808" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1578628770713">
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1578644197466">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1578628770713" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1578644197466" />
     <state x="363" y="188" key="com.intellij.ide.util.TipDialog" timestamp="1578627079774">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
