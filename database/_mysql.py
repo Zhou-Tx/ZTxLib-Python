@@ -89,18 +89,9 @@ class MySQL:
         :param args:a object, a tuple or a dict with the committing arguments or None
         :return:the count of changed records
         """
-        return self.update_batch_((sql, args))
+        return self.update_batch((sql, args))
 
-    def update_batch(self, args: list) -> int:
-        """
-        commit some sql sentences to modify the database
-        :param args: a list contains several tuple of sql and args,
-            such as [(sql1,args1),(sql2,args2),...] where args may be a object, a tuple, a dict or None
-        :return:
-        """
-        return self.update_batch_(*args)
-
-    def update_batch_(self, *args) -> int:
+    def update_batch(self, *args: tuple) -> int:
         """
         commit some sql sentences to modify the database
         :param args: a list contains several tuple of sql and args,
