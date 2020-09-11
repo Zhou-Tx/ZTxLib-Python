@@ -46,6 +46,17 @@ class MySQL:
             passwd=self.__passwd
         )
 
+    def test_connection(self) -> bool:
+        """
+        Test the connection
+        :return: Whether a connection can be established.
+        """
+        try:
+            self.__connect().close()
+            return True
+        except DatabaseError:
+            return False
+
     def fetchone(self, sql: str, args=None) -> tuple or None:
         """
         Fetch the first record matches the sql sentence
@@ -58,9 +69,9 @@ class MySQL:
         try:
             cursor.execute(sql, args)
             return cursor.fetchone()
-        except DatabaseError:
+        except DatabaseError as e:
             db.rollback()
-            return None
+            raise e
         finally:
             db.close()
 
@@ -76,9 +87,9 @@ class MySQL:
         try:
             cursor.execute(sql, args)
             return cursor.fetchall()
-        except DatabaseError:
+        except DatabaseError as e:
             db.rollback()
-            return None
+            raise e
         finally:
             db.close()
 
@@ -91,7 +102,7 @@ class MySQL:
         """
         return self.update_batch((sql, args))
 
-    def update_batch(self, *args: tuple) -> int:
+    def update_batch(self, *args: [tuple]) -> int:
         """
         commit some sql sentences to modify the database
         :param args: a list contains several tuple of sql and args,
@@ -106,8 +117,8 @@ class MySQL:
                 cnt += cursor.execute(*sql)
             db.commit()
             return cnt
-        except DatabaseError:
+        except DatabaseError as e:
             db.rollback()
-            return 0
+            raise e
         finally:
             db.close()
