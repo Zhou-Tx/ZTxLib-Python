@@ -18,19 +18,10 @@ class SMTP:
             user: str,
             password: str,
     ):
+        self.__host = host
+        self.__port = port
         self.__user = user
-        smtp = smtplib.SMTP_SSL(
-            host=host
-        )
-        smtp.connect(
-            host=host,
-            port=port,
-        )
-        smtp.login(
-            user=user,
-            password=password,
-        )
-        self.__smtp = smtp
+        self.__password = password
 
     def send(
             self,
@@ -49,13 +40,17 @@ class SMTP:
         :param header_to: 收件人: List<dict> [{'name':'', 'addr':''}, ...]
         :return: None
         """
-        print(';'.join(['%(name)s<%(addr)s>' % to for to in header_to]))
+        smtp = smtplib.SMTP_SSL(host=self.__host)
+        smtp.connect(host=self.__host, port=self.__port)
+        smtp.login(user=self.__user, password=self.__password)
+        # print(';'.join(['%(name)s<%(addr)s>' % to for to in header_to]))
         message = MIMEText(message, message_type, 'utf-8')
         message['Subject'] = Header(subject)
         message['From'] = Header(header_from)
         message['To'] = Header(';'.join(['%(name)s<%(addr)s>' % to for to in header_to]))
-        self.__smtp.sendmail(
+        smtp.sendmail(
             from_addr=self.__user,
             to_addrs=[to['addr'] for to in header_to],
             msg=message.as_string(),
         )
+        smtp.close()
