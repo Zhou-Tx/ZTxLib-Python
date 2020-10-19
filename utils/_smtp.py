@@ -36,6 +36,7 @@ class SMTP:
             self,
             subject: str,
             message: str,
+            message_type: str = 'plain',
             header_from: str = '',
             *header_to: dict
     ):
@@ -43,12 +44,13 @@ class SMTP:
         Send An Email
         :param subject: 邮件标题
         :param message: 邮件内容
+        :param message_type: 邮件格式（plain/html）
         :param header_from: 发件人
         :param header_to: 收件人: List<dict> [{'name':'', 'addr':''}, ...]
         :return: None
         """
         print(';'.join(['%(name)s<%(addr)s>' % to for to in header_to]))
-        message = MIMEText(message, 'html', 'utf8')
+        message = MIMEText(message, message_type, 'utf-8')
         message['Subject'] = Header(subject)
         message['From'] = Header(header_from)
         message['To'] = Header(';'.join(['%(name)s<%(addr)s>' % to for to in header_to]))
