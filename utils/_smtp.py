@@ -5,9 +5,9 @@
 # @Software :  PyCharm Professional x64
 # @FileName :  _smtp.py
 """"""
-import smtplib
 from email.header import Header
 from email.mime.text import MIMEText
+from smtplib import SMTP_SSL
 
 
 class SMTP:
@@ -40,7 +40,7 @@ class SMTP:
         :param header_to: 收件人: List<dict> [{'name':'', 'addr':''}, ...]
         :return: None
         """
-        smtp = smtplib.SMTP_SSL(host=self.__host)
+        smtp = SMTP_SSL(host=self.__host)
         smtp.connect(host=self.__host, port=self.__port)
         smtp.login(user=self.__user, password=self.__password)
         # print(';'.join(['%(name)s<%(addr)s>' % to for to in header_to]))
