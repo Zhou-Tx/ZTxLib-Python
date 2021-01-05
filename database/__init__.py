@@ -5,5 +5,6 @@
 # @Software :  PyCharm Professional x64
 # @FileName :  __init__.py
 """"""
+from ._mariadb import MariaDB
 from ._mysql import MySQL
 from ._sqlite import SQLite
