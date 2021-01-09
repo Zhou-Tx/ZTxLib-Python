@@ -49,7 +49,13 @@ class MariaDB(mariadb.ConnectionPool):
             def fetchall(self) -> List[Any]:
                 pass
 
+            def close(self) -> None:
+                pass
+
         def cursor(self, *args, **kwargs) -> Cursor:
+            pass
+
+        def close(self) -> None:
             pass
 
     def get_connection(self, *args, **kwargs) -> Connection:
