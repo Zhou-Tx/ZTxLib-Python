@@ -14,3 +14,6 @@ class Autowired:
 
     def __get__(self, obj=None, objtype=None):
         return ApplicationContext.get_bean(self.name)
+    
+    def __call__(self, *args, **kwargs):
+        pass
