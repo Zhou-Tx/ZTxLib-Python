@@ -21,8 +21,8 @@ packages: dict[str, Package] = dict(
     rpspring=Package(
         package={'ztxlib.rpspring'}
     ),
-    rebatis=Package(
-        package={'ztxlib.rebatis'}
+    rpbatis=Package(
+        package={'ztxlib.rpbatis'}
     ),
     smtp=Package(
         package={'ztxlib.smtp'}
