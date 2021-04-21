@@ -6,6 +6,7 @@
 # @FileName :  _mariadb.py
 """"""
 from typing import Any
+from typing import List
 from typing import NamedTuple
 from typing import Tuple
 
@@ -47,13 +48,13 @@ class MariaDB(mariadb.ConnectionPool):
             def execute(self, statement: str, data: Any) -> None:
                 pass
 
-            def executemany(self, statement: str, data: list[Any]) -> None:
+            def executemany(self, statement: str, data: List[Any]) -> None:
                 pass
 
             def fetchone(self) -> NamedTuple:
                 pass
 
-            def fetchall(self) -> list[NamedTuple]:
+            def fetchall(self) -> List[NamedTuple]:
                 pass
 
             def close(self) -> None:

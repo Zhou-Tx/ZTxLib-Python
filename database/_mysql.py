@@ -5,6 +5,8 @@
 # @Software :  PyCharm Professional x64
 # @FileName :  _mysql
 """"""
+from typing import List
+
 from pymysql import connect, DatabaseError
 
 
@@ -82,7 +84,7 @@ class MySQL:
             cursor.close()
             db.close()
 
-    def fetchall(self, sql: str, args=None) -> list[dict]:
+    def fetchall(self, sql: str, args=None) -> List[dict]:
         """
         Fetch all the records match the sql sentence
         :param sql:a querying sql sentence

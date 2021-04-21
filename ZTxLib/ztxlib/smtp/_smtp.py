@@ -9,6 +9,7 @@ from email.header import Header
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from smtplib import SMTP_SSL, SMTPRecipientsRefused
+from typing import List
 
 
 class SMTP:
@@ -32,8 +33,8 @@ class SMTP:
             subject: str,  # 邮件主题
             header_from: str = '',  # 发件人名称
             header_to: str = '',  # 收件人名称
-            receivers: list[str] = None,  # 收件人地址
-            mime_parts: list[MIMEBase] = None  # 邮件内容
+            receivers: List[str] = None,  # 收件人地址
+            mime_parts: List[MIMEBase] = None  # 邮件内容
     ):
         if receivers is None:
             raise SMTP.NonReceiversError("unresolved receivers: [%s]" % receivers)
