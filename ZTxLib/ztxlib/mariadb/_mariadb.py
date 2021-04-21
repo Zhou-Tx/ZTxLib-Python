@@ -7,6 +7,7 @@
 """"""
 from typing import Any
 from typing import NamedTuple
+from typing import Tuple
 
 import mariadb
 
@@ -80,7 +81,7 @@ class MariaDB(mariadb.ConnectionPool):
             self.add_connection(connection)
             return connection
 
-    def get_connection_cursor(self) -> tuple[Connection, Connection.Cursor]:
+    def get_connection_cursor(self) -> Tuple[Connection, Connection.Cursor]:
         connection = self.get_connection()
         cursor = connection.cursor(named_tuple=True)
         return connection, cursor
