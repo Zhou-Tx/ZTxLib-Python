@@ -84,7 +84,7 @@ class ExecuteMany:
             connection, cursor = connections.get_connection_cursor()
             try:
                 cursor.executemany(statement, args)
-                if len(kwargs):
+                if len(args):
                     logging.info(
                         "Submit [%s] with parameter:\n%s",
                         cursor.statement,
