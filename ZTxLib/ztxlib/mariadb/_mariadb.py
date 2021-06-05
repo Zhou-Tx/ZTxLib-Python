@@ -79,7 +79,10 @@ class MariaDB(mariadb.ConnectionPool):
                 database=self.database,
                 autocommit=self.autocommit,
             )
-            self.add_connection(connection)
+            try:
+                self.add_connection(connection)
+            except mariadb.PoolError:
+                pass
             return connection
 
     def get_connection_cursor(self) -> Tuple[Connection, Connection.Cursor]:
