@@ -2,8 +2,8 @@
 # -*- coding: UTF-8 -*-
 # @Time     :  2021/4/17
 # @Author   :  ZhouTianxing
-# @Software :  PyCharm Professional x64
-# @FileName :  _Connections.py
+# @Software :  PyCharm x64
+# @FileName :  _Connections
 """"""
 from ztxlib.rpspring import Value
 

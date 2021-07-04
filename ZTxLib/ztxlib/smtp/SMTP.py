@@ -2,8 +2,8 @@
 # -*- coding: UTF-8 -*-
 # @Time     :  2020/7/17 0017
 # @Author   :  ZhouTianxing
-# @Software :  PyCharm Professional x64
-# @FileName :  _smtp.py
+# @Software :  PyCharm x64
+# @FileName :  SMTP
 """"""
 from email.header import Header
 from email.mime.base import MIMEBase

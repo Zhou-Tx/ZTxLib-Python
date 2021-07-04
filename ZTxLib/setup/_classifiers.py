@@ -2,8 +2,8 @@
 # -*- coding: UTF-8 -*-
 # @Time     :  2021/4/11
 # @Author   :  ZhouTianxing
-# @Software :  PyCharm Professional x64
-# @FileName :  _classifiers.py
+# @Software :  PyCharm x64
+# @FileName :  _classifiers
 """"""
 import os
 

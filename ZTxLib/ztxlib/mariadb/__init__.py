@@ -2,7 +2,11 @@
 # -*- coding: UTF-8 -*-
 # @Time     :  2021/4/10
 # @Author   :  ZhouTianxing
-# @Software :  PyCharm Professional x64
+# @Software :  PyCharm x64
 # @FileName :  __init__.py
 """"""
-from ._mariadb import MariaDB
+from .MariaDB import MariaDB
+
+__all__ = (
+    'MariaDB',
+)

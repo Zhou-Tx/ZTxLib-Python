@@ -2,8 +2,8 @@
 # -*- coding: UTF-8 -*-
 # @Time     :  2020/12/24 0024
 # @Author   :  ZhouTianxing
-# @Software :  PyCharm Professional x64
-# @FileName :  _mariadb.py
+# @Software :  PyCharm x64
+# @FileName :  MariaDB
 """"""
 from typing import Any
 from typing import List
