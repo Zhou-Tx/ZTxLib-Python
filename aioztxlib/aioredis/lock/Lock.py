@@ -43,7 +43,7 @@ class Lock:
                     Lock.logger.info("Acquired RedisLock [%s]", self.name)
                     return True
             else:
-                if await self._acquire(10):
+                if await self._acquire(30):
                     self.renew_timeout = dict(
                         thread=Thread(target=self._renew_timeout),
                         renewing=True,
@@ -70,14 +70,14 @@ class Lock:
         await self.scripting.eval_sha(
             ScriptingSha.EXTEND,
             keys=[self.name],
-            args=[self.uuid, timeout]
+            args=[self.uuid, timeout * 1000]
         )
 
     async def renew(self, timeout: int):
         await self.scripting.eval_sha(
             ScriptingSha.RENEW,
             keys=[self.name],
-            args=[self.uuid, timeout]
+            args=[self.uuid, timeout * 1000]
         )
 
     async def _acquire(self, timeout: int):
@@ -89,5 +89,5 @@ class Lock:
 
     def _renew_timeout(self):
         while self.renew_timeout['renewing']:
-            asyncio.run(self.renew(10000))
-            time.sleep(5)
+            asyncio.run(self.renew(30))
+            time.sleep(20)
