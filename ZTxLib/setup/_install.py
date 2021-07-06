@@ -3,7 +3,6 @@
 # @Time     :  2021/4/10
 # @Author   :  ZhouTianxing
 # @Software :  PyCharm x64
-# @FileName :  _install
 """"""
 import os
 from typing import Dict

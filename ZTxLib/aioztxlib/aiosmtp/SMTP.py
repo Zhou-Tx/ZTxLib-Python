@@ -3,7 +3,6 @@
 # @Time     :  2021/7/2
 # @Author   :  ZhouTianxing
 # @Software :  PyCharm x64
-# @FileName :  AioSmtp
 """"""
 from email.header import Header
 from email.mime.base import MIMEBase

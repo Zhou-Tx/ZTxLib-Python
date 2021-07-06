@@ -117,6 +117,3 @@ dmypy.json
 # IDE settings
 .idea/
 .vscode/
-
-# local files
-.local/

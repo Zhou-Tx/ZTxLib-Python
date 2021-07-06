@@ -3,7 +3,6 @@
 # @Time     :  2021/4/10
 # @Author   :  ZhouTianxing
 # @Software :  PyCharm x64
-# @FileName :  __main__
 """"""
 import sys
 

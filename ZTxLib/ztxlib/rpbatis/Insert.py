@@ -3,7 +3,6 @@
 # @Time     :  2021/7/4
 # @Author   :  ZhouTianxing
 # @Software :  PyCharm x64
-# @FileName :  Insert
 """"""
 from .Execute import Execute, ExecuteMany
 

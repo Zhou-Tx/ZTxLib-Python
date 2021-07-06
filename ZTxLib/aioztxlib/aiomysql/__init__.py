@@ -3,7 +3,6 @@
 # @Time     :  2021/7/1
 # @Author   :  ZhouTianxing
 # @Software :  PyCharm x64
-# @FileName :  __init__.py
 """"""
 from .MySQL import MySQL
 

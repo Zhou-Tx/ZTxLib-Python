@@ -3,7 +3,6 @@
 # @Time     :  2020/12/24 0024
 # @Author   :  ZhouTianxing
 # @Software :  PyCharm x64
-# @FileName :  MariaDB
 """"""
 from typing import Any
 from typing import List

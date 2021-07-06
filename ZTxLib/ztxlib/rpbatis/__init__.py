@@ -3,7 +3,6 @@
 # @Time     :  2021/4/17
 # @Author   :  ZhouTianxing
 # @Software :  PyCharm x64
-# @FileName :  __init__.py
 """"""
 from .Insert import Insert
 from .Insert import InsertMany

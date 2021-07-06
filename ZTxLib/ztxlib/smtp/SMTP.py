@@ -3,7 +3,6 @@
 # @Time     :  2020/7/17 0017
 # @Author   :  ZhouTianxing
 # @Software :  PyCharm x64
-# @FileName :  SMTP
 """"""
 from email.header import Header
 from email.mime.base import MIMEBase
