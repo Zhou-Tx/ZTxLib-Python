@@ -5,8 +5,10 @@
 # @Software :  PyCharm x64
 """"""
 import asyncio
+import logging
 import time
 import uuid
+from logging import Logger
 from threading import Thread
 
 from aioredis import ConnectionsPool
@@ -17,6 +19,8 @@ from ..exceptions import RedisTimeoutError, UnlockError
 
 
 class Lock:
+    logger: Logger = logging.getLogger("RedisLock")
+
     def __init__(self, pool: ConnectionsPool):
         self.pool = pool
         self.name = None
@@ -36,6 +40,7 @@ class Lock:
         while True:
             if timeout:
                 if await self._acquire(timeout):
+                    Lock.logger.info("Acquired RedisLock [%s]", self.name)
                     return True
             else:
                 if await self._acquire(10):
@@ -44,18 +49,20 @@ class Lock:
                         renewing=True,
                     )
                     self.renew_timeout['thread'].start()
+                    Lock.logger.info("Acquired RedisLock [%s]", self.name)
                     return True
             if wait_timeout and time.time() - start_time > wait_timeout:
                 raise RedisTimeoutError("Timeout while waiting for [%s]" % self.name)
             await asyncio.sleep(0.01)
 
     async def release(self):
-        self.renew_timeout.update(renewing=False)
         if await self.scripting.eval_sha(
                 ScriptingSha.RELEASE,
                 keys=[self.name],
                 args=[self.uuid]
         ):
+            self.renew_timeout.update(renewing=False)
+            Lock.logger.info("Released RedisLock [%s]", self.name)
             return True
         raise UnlockError
 
