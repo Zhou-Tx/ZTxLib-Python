@@ -4,8 +4,6 @@
 # @Author   :  ZhouTianxing
 # @Software :  PyCharm x64
 """"""
-from typing import List
-
 import aiomysql
 
 
@@ -92,7 +90,7 @@ class MySQL:
     async def fetchall(self,
                        statement: str,
                        data: dict = None
-                       ) -> List[dict]:
+                       ) -> list[dict]:
         """
         查询多条结果
 

@@ -7,70 +7,68 @@
 * [一、目录](#一目录)
 * [二、项目结构](#二项目结构)
 * [三、使用说明](#三使用说明)
-  * [1、ZTxLib](#1ztxlib)
-  * [1.1、接口说明](#11接口说明)
-  * [1.2、安装方法](#12安装方法)
-  * [2、database](#2database)
-  * [2.1、接口说明](#21接口说明)
-  * [2.2、使用方法](#22使用方法)
-  * [3、utils](#3utils)
-  * [3.1、接口说明](#31接口说明)
-  * [3.2、使用方法](#32使用方法)
+  * [1、ztxlib](#1ztxlib)
+  * [2、aioztxlib](#2aioztxlib)
 
 ### 二、项目结构
 
 ```text
-ZTxLib-Python
-├── ZTxLib                  # 可安装的ztxlib模块
-│  ├── setup               # 安装模块
-│  │ ├── __main__.py       # 模块入口
-│  │ ├── _classifiers.py   # 分类器列表
-│  │ ├── _install.py       # 待装入的模块
-│  │ ├── _packages_.py     # 模块列表
-│  │ ├── classifiers.txt   # 分类器名称
-│  │ └── install.txt       # 待装入的模块名
-│  └── ztxlib              # ztxlib模块
-│    ├── mariadb           # mariadb连接池
-│    ├── rpspring          # 面向切面注解（仿JavaSpring）
-│    ├── rpbatis           # mysql中间件注解（仿mybatis）
-│    └── smtp              # 邮件发送服务
-├── database                # 数据库初步封装（无连接池）
-│  ├── __init__.py         # 
-│  ├── _mysql.py           # pymysql初步封装
-│  └── _sqlite.py          # sqlite初步封装
-├── utils                   # 工具类
-│  ├── __init__.py
-│  └── _properties         # properties文件解析
-└── requirements.txt        # pip依赖包列表
+ZTxLib
+├── ztxlib              # ztxlib同步模块
+│    ├── mariadb        # mariadb连接池
+│    ├── rpspring       # 面向切面注解（仿JavaSpring）
+│    ├── rpbatis        # mysql中间件注解（仿mybatis）
+│    └── smtp           # 邮件发送服务
+├── aioztxlib           # ztxlib异步模块
+│    ├── aiomysql       # mysql操作类
+│    ├── aioredis       # redis操作类
+│    └── smtp           # 邮件发送服务
+└── requirements.txt    # pip依赖包列表
 ```
 
 ## 三、使用说明
 
-### 1、ZTxLib
+### 1、ztxlib
 
-该模块为完整可安装类库
-
-#### 1.1、接口说明
+> 同步ztxlib模块
 
 (1) mariadb
 
 ```python
-db = MariaDB(
-    name: str = 'pool',
-    host: str = 'localhost',
-    port: int = 3306,
-    user: str = 'root',
-    password: str = '',
-    database: str = '',
+db = mariadb.MariaDB(
+    name='pool',  # 连接池名称
+    host='localhost',  # 服务器地址
+    port=3306,  # 端口号
+    user='root',  # 用户名
+    password='',  # 密码
+    database='',  # 数据库
 )
-connection, cursor = db.get_connection_cursor()
-try:
+with db.start() as cursor:
     pass  # do something with cursor
-finally:
-    cursor.close(), connection.close()
 ```
 
-(2) rpspring
+(2) smtp
+
+```python
+# 初始化发件服务器
+smtp = smtp.SMTP(
+    host='',  # 发件服务器地址
+    port=994,  # 端口号
+    user='',  # 用户名（发件地址）
+    password='',  # 密码
+)
+with smtp:
+    # 发送邮件
+    smtp.send(
+        subject='',  # 邮件主题
+        header_from='',  # 发件人名称
+        header_to='',  # 收件人名称
+        receivers=[],  # 收件人地址
+        mime_parts=[],  # 邮件内容
+    )
+```
+
+(3) rpspring
 
 面向切面编程模式（仿JavaSpring）
 
@@ -105,7 +103,7 @@ def bar() -> type: pass
 # 从 application.yml 读取配置信息，查找 foo.bar 属性，将值传递给 bar 对象
 ```
 
-(3) rpbatis
+(4) rpbatis
 
 ```yaml
 # application.yml 样例
@@ -122,18 +120,26 @@ database:
 # definition
 @Select("SELECT * FROM `${table}` WHERE `id`=#{id}")
 def select(table: str, id: int): pass
+
+
 # usage
 data = select(table='t', id=1)
+
 
 # definition
 @Insert("INSERT INTO `${table}` VALUES(#{value1}, #{value2})")
 def insert(value1: str, value2: str, table: str): pass
+
+
 # usage
 insert(value1='v1', value2='v2', table='t')
+
 
 # definition
 @Insert("INSERT INTO `${table}` VALUES(#{value1}, #{value2})")
 def insert_many(*args: dict, table: str): pass
+
+
 # uages
 insert_many(
     dict(value1='v1', value2='v1'),
@@ -145,79 +151,61 @@ insert_many(
 ## DeleteMany, UpdateMany 用法同 InsertMany
 ```
 
-(4) smtp
+### 2、aioztxlib
+
+> 异步ztxlib模块
+
+(1) aiomysql
+
+```python
+db = aiomysql.create_pool(
+    host='localhost',  # 服务器地址
+    port=3306,  # 端口号
+    user='root',  # 用户名
+    password='',  # 密码
+    database='',  # 数据库
+)
+res1: int = await db.execute("", ...)
+res2: dict = await db.fetchone("", ...)
+res3: list[dict] = await db.fetchall("", ...)
+```
+
+(2) aioredis
+
+```python
+pool = aioredis.create_pool(
+    address=('localhost', 6379),
+    db=0,
+)
+async with aioredis.start(pool) as redis:
+    pass  # to do something
+async with aioredis.lock(
+        pool=pool,
+        name="lock",
+        wait_timeout=5,
+        timeout=30,
+) as lock:
+    async with aioredis.start(pool) as redis:
+        pass  # to do something
+```
+
+(3) aiosmtp
 
 ```python
 # 初始化发件服务器
-smtp = SMTP(
-    host='',    # 发件服务器地址
-    port=994,   # 发件服务器端口号
-    user='',    # 用户名（发件人地址）
-    password='' # 密码
+smtp = aiosmtp.SMTP(
+    host='',  # 发件服务器地址
+    port=994,  # 端口号
+    user='',  # 用户名（发件地址）
+    password='',  # 密码
 )
-# 发送邮件
-smtp.send(
-    subject='',     # 邮件主题
-    header_from=''  # 发件人名称
-    header_to=''    # 收件人名称
-    receivers=[]    # 收件人地址
-    mime_parts=[]   # 邮件内容
-)
+with smtp:
+    # 发送邮件
+    smtp.send(
+        subject='',  # 邮件主题
+        header_from='',  # 发件人名称
+        header_to='',  # 收件人名称
+        receivers=[],  # 收件人地址
+        mime_parts=[],  # 邮件内容
+    )
 ```
-
-#### 1.2、安装方法
-
-(1) 编辑`install.txt`, 可选模块列表如下：
-
-```text
-mariadb
-rpspring
-rpbatis
-smtp
-```
-
-(2) 使用终端命令安装至当前环境
-
-```shell
-# 可以使用
-# ./env/Script/activate [Windows]
-# 或
-# source env/bin/activate [Linux]
-# 激活虚拟环境
-cd ZTxLib
-python -m setup install
-```
-
-### 2、database
-
-该模块为部分数据库初步封装操作类库（无连接池，无性能优化）
-
-#### 2.1、接口说明
-
-（略）
-
-#### 2.2、使用方法
-
-该模块未使用 setuptools 工具打包，可直接复制到项目路径下使用
-
-### 3、utils
-
-该模块为其他工具类，包括 properties 文件解析类
-
-#### 3.1、接口说明
-
-(1) properties
-
-```python
-# 输入str或bytes类型的properties格式内容，返回信息内容字典表
-def loads(s: Union[str, bytes], *args, **kwargs) -> dict: pass
-```
-
-```python
-# 输入properties文件指针，读取文件内容，返回信息内容字典表
-def load(fp: IO, *args, **kwargs) -> dict: pass
-```
-
-#### 3.2、使用方法
-
-该模块未使用 setuptools 工具打包，可直接复制到项目路径下使用

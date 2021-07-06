@@ -7,7 +7,6 @@
 from email.header import Header
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
-from typing import List
 
 import aiosmtplib
 
@@ -55,8 +54,8 @@ class SMTP:
             subject: str,
             header_from: str = '',
             header_to: str = '',
-            receivers: List[str] = None,
-            mime_parts: List[MIMEBase] = None
+            receivers: list[str] = None,
+            mime_parts: list[MIMEBase] = None
     ) -> None:
         """
         发送邮件
@@ -68,7 +67,7 @@ class SMTP:
         :param mime_parts: 邮件内容
         :return:
         """
-        if receivers is None:
+        if not isinstance(receivers, list):
             raise NonReceiversError("unresolved receivers: [%s]" % receivers)
         if len(receivers) == 0:
             raise NonReceiversError("empty receivers: %s" % receivers)

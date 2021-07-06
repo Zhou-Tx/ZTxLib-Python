@@ -4,17 +4,15 @@
 # @Author   :  ZhouTianxing
 # @Software :  PyCharm x64
 """"""
-from typing import Dict
-from typing import Set
 
 
 class Package:
-    def __init__(self, package: Set[str] = None, install_requires: Set[str] = None):
+    def __init__(self, package: set[str] = None, install_requires: set[str] = None):
         self.package = set() if package is None else set(package)
         self.install_requires = set() if install_requires is None else set(install_requires)
 
 
-packages: Dict[str, Package] = dict(
+packages: dict[str, Package] = dict(
     mariadb=Package(
         package={'ztxlib.mariadb'},
         install_requires={'mariadb>=1.0.0'},

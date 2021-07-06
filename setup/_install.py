@@ -5,8 +5,6 @@
 # @Software :  PyCharm x64
 """"""
 import os
-from typing import Dict
-from typing import Set
 
 from ._packages import packages
 
@@ -27,7 +25,7 @@ with open(file, encoding='ascii') as f:
     if len(modules) == 0:
         exit(0)
 
-to_install: Dict[str, Set[str]] = dict(
+to_install: dict[str, set[str]] = dict(
     packages=set.union({'ztxlib'}, *[
         packages[package].package
         for package in modules
