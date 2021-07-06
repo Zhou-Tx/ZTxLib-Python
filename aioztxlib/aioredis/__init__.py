@@ -8,14 +8,17 @@ import aioredis
 
 from .Redis import Redis
 from .RedisContextManager import RedisContextManager
+from .lock import lock
 
 ConnectionsPool = aioredis.ConnectionsPool
 create_pool = aioredis.create_pool
 start = RedisContextManager.start
 
 __all__ = (
-    'ConnectionsPool',
     'Redis',
+    'ConnectionsPool',
+    'exceptions',
     'create_pool',
-    'start'
+    'start',
+    'lock',
 )
