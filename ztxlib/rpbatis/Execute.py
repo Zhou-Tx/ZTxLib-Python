@@ -8,8 +8,8 @@ import inspect
 import json
 import logging
 
-from ._Connections import connections
 from .Statement import Statement
+from ._Connections import connections
 
 
 class Execute:

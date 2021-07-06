@@ -4,15 +4,15 @@
 # @Author   :  ZhouTianxing
 # @Software :  PyCharm x64
 """"""
-from .Insert import Insert
-from .Insert import InsertMany
 from .Delete import Delete
 from .Delete import DeleteMany
+from .Insert import Insert
+from .Insert import InsertMany
+from .Select import Select
+from .SqlStatementException import SqlStatementException
+from .Statement import Statement
 from .Update import Update
 from .Update import UpdateMany
-from .Select import Select
-from .Statement import Statement
-from .SqlStatementException import SqlStatementException
 
 __all__ = (
     'Insert',

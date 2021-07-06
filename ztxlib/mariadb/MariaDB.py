@@ -4,12 +4,10 @@
 # @Author   :  ZhouTianxing
 # @Software :  PyCharm x64
 """"""
-from typing import Any
-from typing import List
-from typing import NamedTuple
-from typing import Tuple
-
 import mariadb
+
+from .MariaDBContextManager import MariaDBContextManager
+from ._connection import Connection
 
 
 class MariaDB(mariadb.ConnectionPool):
@@ -39,31 +37,8 @@ class MariaDB(mariadb.ConnectionPool):
         self.database = database
         self.autocommit = autocommit
 
-    def __str__(self):
-        return f"MariadbConnectionPool<host={self.host},port={self.port},database={self.database}>"
-
-    class Connection:
-        class Cursor:
-            def execute(self, statement: str, data: Any) -> None:
-                pass
-
-            def executemany(self, statement: str, data: List[Any]) -> None:
-                pass
-
-            def fetchone(self) -> NamedTuple:
-                pass
-
-            def fetchall(self) -> List[NamedTuple]:
-                pass
-
-            def close(self) -> None:
-                pass
-
-        def cursor(self, *args, **kwargs) -> Cursor:
-            pass
-
-        def close(self) -> None:
-            pass
+    def __repr__(self):
+        return "MariadbConnectionPool<host=%s,port=%d,database=%s>" % (self.host, self.port, self.database)
 
     def get_connection(self, *args, **kwargs) -> Connection:
         try:
@@ -84,7 +59,5 @@ class MariaDB(mariadb.ConnectionPool):
                 pass
             return connection
 
-    def get_connection_cursor(self) -> Tuple[Connection, Connection.Cursor]:
-        connection = self.get_connection()
-        cursor = connection.cursor(named_tuple=True)
-        return connection, cursor
+    def start(self) -> MariaDBContextManager:
+        return MariaDBContextManager(self)
