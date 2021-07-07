@@ -12,7 +12,7 @@ from .Lock import Lock as _Lock
 def lock(
         pool: ConnectionsPool,
         name: str,
-        wait_timeout: int = 0,
+        wait_timeout: int = -1,
         timeout: int = 0
 ):
     return LockContextManager(

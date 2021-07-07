@@ -53,14 +53,16 @@ class Lock:
             await asyncio.sleep(0.01)
 
     async def release(self):
-        if await self.scripting.eval_sha(
-                ScriptingSha.RELEASE,
-                keys=[self.name],
-                args=[self.uuid]
-        ):
+        try:
+            if await self.scripting.eval_sha(
+                    ScriptingSha.RELEASE,
+                    keys=[self.name],
+                    args=[self.uuid]
+            ):
+                Lock.logger.info("Released RedisLock [%s]", self.name)
+                return True
+        finally:
             self.renew_timeout_thread.stop()
-            Lock.logger.info("Released RedisLock [%s]", self.name)
-            return True
         raise UnlockError
 
     async def extend(self, timeout: int):
