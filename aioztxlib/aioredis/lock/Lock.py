@@ -9,11 +9,11 @@ import logging
 import time
 import uuid
 from logging import Logger
-from threading import Thread
 
 from aioredis import ConnectionsPool
 
 from . import ScriptingSha
+from .RenewTimeoutThread import RenewTimeoutThread
 from .ScriptingCommandsMixin import ScriptingCommandsMixin
 from ..exceptions import RedisTimeoutError, UnlockError
 
@@ -25,12 +25,12 @@ class Lock:
         self.pool = pool
         self.name = None
         self.uuid = None
-        self.renew_timeout = None
+        self.renew_timeout_thread = None
         self.scripting = ScriptingCommandsMixin(pool)
 
     async def acquire(self,
                       name: str,
-                      wait_timeout: int = 0,
+                      wait_timeout: int = -1,
                       timeout: int = 0
                       ):
         await ScriptingSha.initialize(script_load=self.scripting.script_load)
@@ -44,14 +44,11 @@ class Lock:
                     return True
             else:
                 if await self._acquire(30):
-                    self.renew_timeout = dict(
-                        thread=Thread(target=self._renew_timeout),
-                        renewing=True,
-                    )
-                    self.renew_timeout['thread'].start()
+                    self.renew_timeout_thread = RenewTimeoutThread(self.renew)
+                    self.renew_timeout_thread.start()
                     Lock.logger.info("Acquired RedisLock [%s]", self.name)
                     return True
-            if wait_timeout and time.time() - start_time > wait_timeout:
+            if 0 <= wait_timeout < time.time() - start_time:
                 raise RedisTimeoutError("Timeout while waiting for [%s]" % self.name)
             await asyncio.sleep(0.01)
 
@@ -61,7 +58,7 @@ class Lock:
                 keys=[self.name],
                 args=[self.uuid]
         ):
-            self.renew_timeout.update(renewing=False)
+            self.renew_timeout_thread.stop()
             Lock.logger.info("Released RedisLock [%s]", self.name)
             return True
         raise UnlockError
@@ -86,8 +83,3 @@ class Lock:
             keys=[self.name],
             args=[self.uuid, timeout * 1000]
         )
-
-    def _renew_timeout(self):
-        while self.renew_timeout['renewing']:
-            asyncio.run(self.renew(30))
-            time.sleep(20)
