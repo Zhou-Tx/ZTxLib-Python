@@ -11,5 +11,13 @@ class RedisTimeoutError(RedisError, TimeoutError):
     pass
 
 
+class WaitingTimeoutError(RedisTimeoutError):
+    pass
+
+
+class RunningTimeoutError(RedisTimeoutError):
+    pass
+
+
 class UnlockError(RedisError):
     pass
