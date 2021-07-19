@@ -15,7 +15,7 @@ class BaseModel(metaclass=ABCMeta):
     def __init__(self, row: dict): pass
 
     @property
-    def __dict(self):
+    def dict(self):
         def _to_small_hump(name: str) -> str:
             words = name.split('_')
             result = [
@@ -28,8 +28,8 @@ class BaseModel(metaclass=ABCMeta):
         return {
             _to_small_hump(attr): self.__getattribute__(attr)
             for attr in dir(self)
-            if attr[0] != '_'
+            if attr != 'dict' and attr[0] != '_'
         }
 
     def __repr__(self) -> str:
-        return json.dumps(self.__dict)
+        return json.dumps(self.dict)

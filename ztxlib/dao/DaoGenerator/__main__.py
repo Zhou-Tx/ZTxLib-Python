@@ -12,15 +12,27 @@ with open(os.path.join(directory, 'config.yml'), 'rb') as f:
     config = yaml.safe_load(f)
 mysql = config['mysql']
 tables = config['tables']
+
+directory = os.path.dirname(directory)
+base_model = os.path.join(directory, '_BaseModel.py')
+base_criteria = os.path.join(directory, '_BaseCriteria.py')
+base_mapper = os.path.join(directory, '_BaseMapper.py')
+
 directory = os.path.abspath(config['directory'])
+os.makedirs(directory, exist_ok=True)
+if not os.path.isdir(directory):
+    raise IOError
+shutil.copy(base_model, directory)
+shutil.copy(base_criteria, directory)
+shutil.copy(base_mapper, directory)
 
 
 def main():
+    model_path = os.path.join(directory, f"%s.py")
+    criteria_path = os.path.join(directory, f"%sCriteria.py")
+    mapper_path = os.path.join(directory, f"%sMapper.py")
     for table_name in tables:
         model_name = ''.join([word[0].upper() + word[1:] for word in table_name.split('_')])
-        model_path = os.path.join(directory, f"%s.py")
-        criteria_path = os.path.join(directory, f"%sCriteria.py")
-        mapper_path = os.path.join(directory, f"%sMapper.py")
         ModelGenerator.generate(
             mysql=mysql,
             table_name=table_name,
