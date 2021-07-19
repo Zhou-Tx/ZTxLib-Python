@@ -50,6 +50,10 @@ def main():
             model_name=model_name,
             mapper_path=mapper_path
         )
+        with open(os.path.join(directory, '__init__.py'), 'a') as f:
+            f.write(f"from .{model_name} import {model_name}\n")
+            f.write(f"from .{model_name}Criteria import {model_name}Criteria\n")
+            f.write(f"from .{model_name}Mapper import {model_name}Mapper\n")
 
 
 if __name__ == '__main__':

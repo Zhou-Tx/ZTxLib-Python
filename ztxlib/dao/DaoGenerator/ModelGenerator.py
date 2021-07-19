@@ -17,7 +17,7 @@ def generate(mysql: dict, table_name: str, model_name: str, model_path: str):
         cursor.close()
         cursor = connection.cursor()
         cursor.execute(
-            query="SELECT COLUMN_NAME, DATA_TYPE, COLUMN_COMMENT FROM information_schema.COLUMNS "
+            query="SELECT COLUMN_NAME, COLUMN_TYPE, COLUMN_COMMENT FROM information_schema.COLUMNS "
                   "WHERE TABLE_SCHEMA = %s AND TABLE_NAME = %s",
             args=(mysql['database'], table_name)
         )
@@ -32,8 +32,8 @@ def generate(mysql: dict, table_name: str, model_name: str, model_path: str):
             if TABLE_COMMENT:
                 f.write(f'    """{TABLE_COMMENT}"""\n\n')
             f.write("    def __init__(self, row: dict):\n")
-            for COLUMN_NAME, DATA_TYPE, COLUMN_COMMENT in fields:
-                if DATA_TYPE == 'bit':
+            for COLUMN_NAME, COLUMN_TYPE, COLUMN_COMMENT in fields:
+                if COLUMN_TYPE == 'bit(1)':
                     f.write(f"        self.{COLUMN_NAME} = bool(row['{COLUMN_NAME}'] == b'\\x01')\n")
                 else:
                     f.write(f"        self.{COLUMN_NAME} = row['{COLUMN_NAME}']\n")
