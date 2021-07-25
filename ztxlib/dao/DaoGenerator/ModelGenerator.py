@@ -31,12 +31,14 @@ def generate(mysql: dict, table_name: str, model_name: str, model_path: str):
             TABLE_COMMENT = ' '.join(TABLE_COMMENT.split())
             if TABLE_COMMENT:
                 f.write(f'    """{TABLE_COMMENT}"""\n\n')
-            f.write("    def __init__(self, row: dict):\n")
+            f.write("    def __init__(self, row: dict = None):\n")
+            f.write("        row = dict() if row is None else row\n\n")
             for COLUMN_NAME, COLUMN_TYPE, COLUMN_COMMENT in fields:
                 if COLUMN_TYPE == 'bit(1)':
-                    f.write(f"        self.{COLUMN_NAME} = bool(row['{COLUMN_NAME}'] == b'\\x01')\n")
+                    f.write(
+                        f"        self.{COLUMN_NAME} = bool(row['{COLUMN_NAME}'] == b'\\x01') if '{COLUMN_NAME}' in row else None\n")
                 else:
-                    f.write(f"        self.{COLUMN_NAME} = row['{COLUMN_NAME}']\n")
+                    f.write(f"        self.{COLUMN_NAME} = row['{COLUMN_NAME}'] if '{COLUMN_NAME}' in row else None\n")
                 COLUMN_COMMENT = ' '.join(COLUMN_COMMENT.split())
                 if COLUMN_COMMENT:
                     f.write(f'        """{COLUMN_COMMENT}"""\n\n')
