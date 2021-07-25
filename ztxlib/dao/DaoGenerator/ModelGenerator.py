@@ -36,7 +36,12 @@ def generate(mysql: dict, table_name: str, model_name: str, model_path: str):
             for COLUMN_NAME, COLUMN_TYPE, COLUMN_COMMENT in fields:
                 if COLUMN_TYPE == 'bit(1)':
                     f.write(
-                        f"        self.{COLUMN_NAME} = bool(row['{COLUMN_NAME}'] == b'\\x01') if '{COLUMN_NAME}' in row else None\n")
+                        f"        self.{COLUMN_NAME} = (None"
+                        f" if '{COLUMN_NAME}' not in row"
+                        f" else bool(row['{COLUMN_NAME}'] == b'\\x01')"
+                        f" if type(row['{COLUMN_NAME}']) is bytes and len(row['{COLUMN_NAME}']) == 1"
+                        f" else row['{COLUMN_NAME}'])\n"
+                    )
                 else:
                     f.write(f"        self.{COLUMN_NAME} = row['{COLUMN_NAME}'] if '{COLUMN_NAME}' in row else None\n")
                 COLUMN_COMMENT = ' '.join(COLUMN_COMMENT.split())
