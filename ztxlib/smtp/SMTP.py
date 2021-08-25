@@ -73,7 +73,7 @@ class SMTP:
             for mime_part in mime_parts:
                 message.attach(mime_part)
 
-        server.sendmail(
+        self.smtp.sendmail(
             from_addr=self.user,
             to_addrs=receivers,
             msg=message.as_string()
